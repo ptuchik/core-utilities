@@ -19,7 +19,7 @@ class CoreUtilitiesServiceProvider extends ServiceProvider
     {
         // Publish a config file
         $this->publishes([
-            __DIR__.'/../config/core-utilities.php' => config_path('ptuchik-core-utilities.php'),
+            __DIR__.'/../../config/core-utilities.php' => config_path('ptuchik-core-utilities.php'),
         ], 'config');
     }
 
