@@ -91,7 +91,7 @@ class Storage
     public function get($path) : string
     {
         // If disk is not local
-        if (!($disk->getDriver()->getAdapter() instanceof Local)) {
+        if (!($this->disk->getDriver()->getAdapter() instanceof Local)) {
 
             // Fix for some cloud storage provider's caching of public files
             if ($this->visibility == Filesystem::VISIBILITY_PUBLIC) {
