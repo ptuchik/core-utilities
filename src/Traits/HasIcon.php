@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Ptuchik\CoreUtilities\Traits;
 
 use Ptuchik\CoreUtilities\Helpers\Storage;
 use Exception;
@@ -11,7 +11,7 @@ use Image;
 
 /**
  * Trait HasIcon
- * @package App
+ * @package Ptuchik\CoreUtilities\Traits
  */
 trait HasIcon
 {
