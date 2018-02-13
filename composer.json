@@ -7,6 +7,11 @@
     "illuminate/support": "^5.5",
     "spatie/laravel-translatable": "^2.1"
   },
+  "autoload": {
+      "psr-4": {
+          "Ptuchik\\CoreUtilities\\": "src/"
+      }
+  },
   "authors": [
     {
       "name": "Avik Aghajanyan",
