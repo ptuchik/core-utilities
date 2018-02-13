@@ -30,6 +30,6 @@ class CoreUtilitiesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/core-utilities.php', 'ptuchik-core-utilities');
+        $this->mergeConfigFrom(__DIR__.'/../../config/core-utilities.php', 'ptuchik-core-utilities');
     }
 }
