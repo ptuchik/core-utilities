@@ -24,7 +24,7 @@ class ForceSSL
     {
         // If protocol is set to HTTPS and it is not AppEngine's Cron request (as it is always calling HTTP),
         // redirect to HTTPS
-        if (!$request->secure() && config('ptuchik-core-utilities.protocol') && !$request->hasHeader('X-Appengine-Cron')) {
+        if (!$request->secure() && config('ptuchik-core-utilities.protocol') == 'https' && !$request->hasHeader('X-Appengine-Cron')) {
             return redirect()->secure($request->getRequestUri(), HttpStatusCode::MOVED_PERMANENTLY);
         }
 
