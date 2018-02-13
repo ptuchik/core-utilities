@@ -1,0 +1,23 @@
+{
+  "name": "ptuchik/core-utilities",
+  "description": "Core utilities for Laravel 5.5 to extend some functionality and prepare project for other related packages",
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "illuminate/support": "^5.5",
+    "spatie/laravel-translatable": "^2.1"
+  },
+  "authors": [
+    {
+      "name": "Avik Aghajanyan",
+      "email": "avik.aghajanyan@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Ptuchik\\CoreUtilities\\Providers\\CoreUtilitiesServiceProvider"
+      ]
+    }
+  }
+}
