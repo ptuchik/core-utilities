@@ -19,5 +19,7 @@
         "Ptuchik\\CoreUtilities\\Providers\\CoreUtilitiesServiceProvider"
       ]
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
