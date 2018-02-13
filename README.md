@@ -63,3 +63,28 @@ Extend all your model's from this one instead of native `Illuminate\Database\Elo
 - `trait HasParams` - You can use this trait in all your models which have `params` attribute in database
 
 **DO NOT FORGET** to cast your `params` attribute as `array` before using this trait
+
+---
+
+- `trait HasIcon` - You can use this trait in all your models which have icon. This will add `$model->saveIcon($image);` and `$model->deleteIcon();` methods.
+
+**DO NOT FORGET** to add `icon` column to your model's table before using this trait
+
+---
+
+- `class Storage` - You can use it as a factory for your storage
+
+### Usage
+
+```php
+use Ptuchik\CoreUtilities\Helpers\Storage;
+
+$storage = new Storage(); // Pass true as the only parameter if you need to initialize your public storage
+
+// ... after initialization you can use $storage variable as regular Filesystem Adapter. like:
+
+$storage->get($path);
+$storage->put($path);
+
+// ...etc...
+```
