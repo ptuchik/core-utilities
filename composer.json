@@ -7,7 +7,9 @@
     "illuminate/support": "^5.5",
     "spatie/laravel-translatable": "^2.1",
     "superbalist/laravel-google-cloud-storage": "^1.0",
-    "intervention/image": "^2.3"
+    "intervention/image": "^2.3",
+    "jenssegers/agent": "^2.4",
+    "jenssegers/date": "^3.2"
   },
   "autoload": {
     "psr-4": {
