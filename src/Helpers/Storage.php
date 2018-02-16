@@ -3,9 +3,7 @@
 namespace Ptuchik\CoreUtilities\Helpers;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage as BaseStorage;
-use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter;
 
@@ -77,7 +75,7 @@ class Storage
      */
     public function name($path) : string
     {
-        return Arr::last(explode(DIRECTORY_SEPARATOR, $path));
+        return array_last(explode(DIRECTORY_SEPARATOR, $path));
     }
 
     /**
@@ -227,7 +225,7 @@ class Storage
     {
         $files = $this->allFiles($from);
         foreach ($files as $file) {
-            if (!$this->copy($file, Str::replaceFirst($from, $to, $file))) {
+            if (!$this->copy($file, str_replace_first($from, $to, $file))) {
                 return false;
             }
         }
@@ -262,7 +260,7 @@ class Storage
 
         $files = $this->allFiles($from);
         foreach ($files as $file) {
-            if (!$this->move($file, Str::replaceFirst($from, $to, $file))) {
+            if (!$this->move($file, str_replace_first($from, $to, $file))) {
                 return false;
             }
         }
