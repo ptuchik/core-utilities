@@ -24,4 +24,17 @@ trait HasParams
 
         return $this;
     }
+
+    /**
+     * Get param
+     *
+     * @param      $key
+     * @param null $default
+     *
+     * @return null
+     */
+    public function getParam($key, $default = null)
+    {
+        return $this->params[$key] ?? $default;
+    }
 }
