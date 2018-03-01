@@ -1,6 +1,15 @@
 {
   "name": "ptuchik/core-utilities",
   "description": "Core utilities for Laravel 5.5 to extend some functionality and prepare project for other related packages",
+  "keywords": [
+    "ptuchik",
+    "core",
+    "laravel",
+    "utilites",
+    "translatable",
+    "storage",
+    "google"
+  ],
   "license": "MIT",
   "type": "library",
   "require": {
