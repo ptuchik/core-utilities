@@ -54,4 +54,16 @@ class AbstractTypes
 
         return $flipped[$value];
     }
+
+    /**
+     * Return the name of constant by given value
+     *
+     * @param $value
+     *
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     */
+    public static function name($value)
+    {
+        return ($key = static::key($value)) ? trans(config('ptuchik-core-utilities.translations_prefix').'.'.$key) : null;
+    }
 }

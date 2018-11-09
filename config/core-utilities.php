@@ -8,6 +8,12 @@ return [
     'translations_prefix' => 'general',
 
     /**
+     * Default and fallback locales for translations
+     */
+    'default_locale'      => env('DEFAULT_LOCALE', env('LOCALE', 'en')),
+    'fallback_locale'     => env('FALLBACK_LOCALE', 'fallback'),
+
+    /**
      * Application protocol
      */
     'protocol'            => env('PROTOCOL', 'http'),

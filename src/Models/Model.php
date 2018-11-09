@@ -166,11 +166,61 @@ class Model extends BaseModel
 
         // Check if the attribute is translatable, set it as current locale translation
         if (in_array($key, $this->translatable)) {
-            return $this->setTranslation($key, config('app.locale'), $value);
+
+            // Set current translation
+            $setTranslation = $this->setTranslation($key, $this->getLocale(), $value);
+
+            // Check if fallback translation is missing or current local is the default one,
+            // update fallback locale also
+            if ($this->getLocale() == $this->getDefaultLocale() ||
+                !in_array($this->getFallbackLocale(), $this->getTranslatedLocales($key))) {
+                $this->setTranslation($key, $this->getFallbackLocale(), $value);
+            }
+
+            return $setTranslation;
         }
 
         // Otherwise call the native setter
         return parent::setAttribute(snake_case($key), $value);
+    }
+
+    /**
+     * Set the array of model attributes. No checking is done.
+     *
+     * @param  array $attributes
+     * @param  bool  $sync
+     *
+     * @return $this
+     */
+    public function setRawAttributes(array $attributes, $sync = false)
+    {
+        return parent::setRawAttributes(array_merge($this->attributes, $attributes), $sync);
+    }
+
+    /**
+     * Normalize locale
+     *
+     * @param string $key
+     * @param string $locale
+     * @param bool   $useFallbackLocale
+     *
+     * @return string
+     */
+    protected function normalizeLocale(string $key, string $locale, bool $useFallbackLocale) : string
+    {
+        if (in_array($locale, $this->getTranslatedLocales($key))) {
+            return $locale;
+        }
+
+        if (!$useFallbackLocale) {
+            return $locale;
+        }
+
+        if (!is_null($fallbackLocale = $this->getFallbackLocale())) {
+            return $fallbackLocale;
+        }
+
+        return $locale;
     }
 
     /**
@@ -203,7 +253,7 @@ class Model extends BaseModel
         $value = $this->getAttributes()[$key] ?? '';
 
         if (($this->casts[$key] ?? '') == 'array' && !is_array($this->getTranslationValue($value))) {
-            return [config('app.locale') => []];
+            return [$this->getLocale() => []];
         }
 
         return json_decode($value, true) ?: [];
@@ -220,7 +270,7 @@ class Model extends BaseModel
     {
         $value = json_decode($value, true);
 
-        return $value[config('app.locale')] ?? $value[config('translatable.fallback_locale')] ?? '';
+        return $value[$this->getLocale()] ?? $value[$this->getFallbackLocale()] ?? '';
     }
 
     /**
@@ -235,6 +285,18 @@ class Model extends BaseModel
         }
 
         return $attributes;
+    }
+
+    /**
+     * Encode the given value as JSON.
+     *
+     * @param  mixed $value
+     *
+     * @return string
+     */
+    protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -279,5 +341,32 @@ class Model extends BaseModel
 
         // Return casted value
         return $value;
+    }
+
+    /**
+     * Get morph type from name
+     * @return string
+     */
+    public static function getMorphType()
+    {
+        return snake_case(class_basename(static::class));
+    }
+
+    /**
+     * Get default locale
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    protected function getDefaultLocale()
+    {
+        return config('ptuchik-core-utilities.default_locale');
+    }
+
+    /**
+     * Get fallback locale
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    protected function getFallbackLocale()
+    {
+        return config('ptuchik-core-utilities.fallback_locale');
     }
 }

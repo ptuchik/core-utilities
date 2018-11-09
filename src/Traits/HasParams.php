@@ -31,10 +31,22 @@ trait HasParams
      * @param      $key
      * @param null $default
      *
-     * @return null
+     * @return mixed
      */
     public function getParam($key, $default = null)
     {
-        return $this->params[$key] ?? $default;
+        return array_get($this->params, $key, $default) ?? $default;
+    }
+
+    /**
+     * Has param
+     *
+     * @param      $key
+     *
+     * @return mixed
+     */
+    public function hasParam($key)
+    {
+        return array_has($this->params, $key);
     }
 }
