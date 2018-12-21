@@ -11,7 +11,9 @@ use Spatie\Translatable\HasTranslations;
  */
 class Model extends BaseModel
 {
-    use HasTranslations;
+    use HasTranslations {
+        getTranslations as parentGetTranslations;
+    }
 
     /**
      * Array of translatable attributes
@@ -242,13 +244,17 @@ class Model extends BaseModel
     /**
      * Get translations
      *
-     * @param $key
+     * @param string|null $key
      *
      * @return array
      */
-    public function getTranslations($key) : array
+    public function getTranslations(string $key = null) : array
     {
-        $this->guardAgainstUntranslatableAttribute($key);
+        if (is_null($key)) {
+            return $this->parentGetTranslations();
+        }
+
+        $this->guardAgainstNonTranslatableAttribute($key);
 
         $value = $this->getAttributes()[$key] ?? '';
 
