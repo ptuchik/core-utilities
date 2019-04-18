@@ -4,6 +4,7 @@ namespace Ptuchik\CoreUtilities\Models;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Str;
 
 /**
  * Class Model
@@ -149,7 +150,7 @@ class Model extends BaseModel
             return parent::getAttribute($key);
         }
 
-        return parent::getAttribute(snake_case($key));
+        return parent::getAttribute(Str::snake($key));
     }
 
     /**
@@ -162,11 +163,11 @@ class Model extends BaseModel
      */
     public function setAttribute($key, $value)
     {
-        $key = snake_case($key);
+        $key = Str::snake($key);
 
         $value = in_array($key, $this->unsanitized) ? $value : $this->sanitizeValue($value);
 
-        // Check if the attribute is translatable, set it as current locale translation
+        // Check if the attribute is translatable, set in in JSON format as current locale translation
         if (in_array($key, $this->translatable)) {
 
             // Set current translation
@@ -183,7 +184,7 @@ class Model extends BaseModel
         }
 
         // Otherwise call the native setter
-        return parent::setAttribute(snake_case($key), $value);
+        return parent::setAttribute(Str::snake($key), $value);
     }
 
     /**
@@ -235,7 +236,7 @@ class Model extends BaseModel
         $array = parent::toArray();
         $camelArray = [];
         foreach ($array as $name => $value) {
-            $camelArray[camel_case($name)] = $value;
+            $camelArray[Str::camel($name)] = $value;
         }
 
         return $camelArray;
@@ -355,7 +356,7 @@ class Model extends BaseModel
      */
     public static function getMorphType()
     {
-        return snake_case(class_basename(static::class));
+        return Str::snake(class_basename(static::class));
     }
 
     /**
