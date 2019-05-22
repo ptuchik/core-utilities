@@ -44,8 +44,8 @@ trait HasIcon
      */
     public function getIconPathAttribute()
     {
-        return config('ptuchik-core-utilities.images_folder').DIRECTORY_SEPARATOR.
-            $this->getTable().DIRECTORY_SEPARATOR.$this->attributes['icon'];
+        return !empty($this->attributes['icon']) ? config('ptuchik-core-utilities.images_folder').DIRECTORY_SEPARATOR.
+            $this->getTable().DIRECTORY_SEPARATOR.$this->attributes['icon'] : null;
     }
 
     /**
