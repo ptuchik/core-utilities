@@ -126,7 +126,7 @@ class Model extends BaseModel
     /**
      * Get an attribute from the $attributes array.
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */
@@ -190,8 +190,8 @@ class Model extends BaseModel
     /**
      * Set the array of model attributes. No checking is done.
      *
-     * @param  array $attributes
-     * @param  bool  $sync
+     * @param array $attributes
+     * @param bool  $sync
      *
      * @return $this
      */
@@ -297,7 +297,7 @@ class Model extends BaseModel
     /**
      * Encode the given value as JSON.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return string
      */
@@ -309,8 +309,8 @@ class Model extends BaseModel
     /**
      * Cast an attribute to a native PHP type.
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return mixed
      */
@@ -357,6 +357,20 @@ class Model extends BaseModel
     public static function getMorphType()
     {
         return Str::snake(class_basename(static::class));
+    }
+
+    /**
+     * Scope a query to only include locale.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param                                        $column
+     * @param                                        $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereTranslation($query, $column, $value)
+    {
+        return $query->where($column.'->'.config('app.locale'), $value);
     }
 
     /**
