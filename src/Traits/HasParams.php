@@ -2,6 +2,8 @@
 
 namespace Ptuchik\CoreUtilities\Traits;
 
+use Illuminate\Support\Arr;
+
 /**
  * Trait HasParams
  * @package Ptuchik\CoreUtilities\Traits
@@ -35,7 +37,7 @@ trait HasParams
      */
     public function getParam($key, $default = null)
     {
-        return array_get($this->params, $key, $default) ?? $default;
+        return Arr::get($this->params, $key, $default) ?? $default;
     }
 
     /**
@@ -47,6 +49,6 @@ trait HasParams
      */
     public function hasParam($key)
     {
-        return array_has($this->params, $key);
+        return Arr::has($this->params, $key);
     }
 }

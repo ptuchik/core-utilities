@@ -2,6 +2,7 @@
 
 namespace Ptuchik\CoreUtilities\Traits;
 
+use Illuminate\Support\Arr;
 use Ptuchik\CoreUtilities\Helpers\Storage;
 use Exception;
 use File;
@@ -23,7 +24,7 @@ trait HasIcon
      */
     public function setIconAttribute($value)
     {
-        $this->attributes['icon'] = array_last(explode('/', $value));
+        $this->attributes['icon'] = Arr::last(explode('/', $value));
     }
 
     /**
