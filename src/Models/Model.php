@@ -2,12 +2,14 @@
 
 namespace Ptuchik\CoreUtilities\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Support\Str;
 
 /**
  * Class Model
+ *
  * @package Ptuchik\CoreUtilities\Models
  */
 class Model extends BaseModel
@@ -18,12 +20,14 @@ class Model extends BaseModel
 
     /**
      * Array of translatable attributes
+     *
      * @var array
      */
     public $translatable = [];
 
     /**
      * This parameter is for enabling and disabling sanitization of model attributes
+     *
      * @var bool
      */
     protected $sanitize = true;
@@ -31,9 +35,22 @@ class Model extends BaseModel
     /**
      * If model attributes sanitization is enabled, this array will
      * hold the attributes which will be ignored
+     *
      * @var array
      */
     protected $unsanitized = [];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param \DateTimeInterface $date
+     *
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format(env('DATE_FORMAT', 'Y-m-d H:i:s'));
+    }
 
     /**
      * Set raw attribute
@@ -228,6 +245,7 @@ class Model extends BaseModel
 
     /**
      * Get the instance as an array.
+     *
      * @return array
      */
     public function toArray()
@@ -282,6 +300,7 @@ class Model extends BaseModel
 
     /**
      * Convert the model's attributes to an array.
+     *
      * @return array
      */
     public function attributesToArray()
@@ -352,6 +371,7 @@ class Model extends BaseModel
 
     /**
      * Get morph type from name
+     *
      * @return string
      */
     public static function getMorphType()
@@ -375,6 +395,7 @@ class Model extends BaseModel
 
     /**
      * Get default locale
+     *
      * @return \Illuminate\Config\Repository|mixed
      */
     protected function getDefaultLocale()
@@ -384,6 +405,7 @@ class Model extends BaseModel
 
     /**
      * Get fallback locale
+     *
      * @return \Illuminate\Config\Repository|mixed
      */
     protected function getFallbackLocale()
