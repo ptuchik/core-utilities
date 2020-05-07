@@ -11,21 +11,25 @@ use Ptuchik\CoreUtilities\Constants\HttpStatusCode;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Validation\Validator;
+use Throwable;
 
 /**
  * Class Handler
+ *
  * @package Ptuchik\CoreUtilities\Exceptions
  */
 class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that should not be reported.
+     *
      * @var array
      */
     protected $dontReport = [];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
+     *
      * @var array
      */
     protected $dontFlash = [
@@ -37,45 +41,41 @@ class Handler extends ExceptionHandler
      * Report or log an exception.
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param Exception $exception
-     *
-     * @return mixed|void
-     * @throws Exception
+     * @param \Throwable $e
      */
-    public function report(Exception $exception)
+    public function report(Throwable $e)
     {
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Exception                $exception
+     * @param \Throwable               $e
      *
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws Exception
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $e)
     {
         // If the request wants JSON (AJAX doesn't always want JSON)
         if ($request->wantsJson()) {
 
             // Convert some validations to suitable format
-            if ($exception instanceof MethodNotAllowedHttpException || $exception instanceof ModelNotFoundException) {
-                $exception = new NotFoundHttpException(trans(config('ptuchik-core-utilities.translations_prefix').'.not_found'));
-            } elseif ($exception instanceof ValidationException) {
-                return $this->parseValidationErrors($exception->validator);
-            } elseif ($exception instanceof TokenMismatchException) {
-                $exception = new Exception(trans(config('ptuchik-core-utilities.translations_prefix').'.csrf_token_error'));
+            if ($e instanceof MethodNotAllowedHttpException || $e instanceof ModelNotFoundException) {
+                $e = new NotFoundHttpException(trans(config('ptuchik-core-utilities.translations_prefix').'.not_found'));
+            } elseif ($e instanceof ValidationException) {
+                return $this->parseValidationErrors($e->validator);
+            } elseif ($e instanceof TokenMismatchException) {
+                $e = new Exception(trans(config('ptuchik-core-utilities.translations_prefix').'.csrf_token_error'));
             }
 
             // Parse and return response
-            return $this->parseResponse($exception);
+            return $this->parseResponse($e);
         }
 
         // Default to the parent class' implementation of handler
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 
     /**
