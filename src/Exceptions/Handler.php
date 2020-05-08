@@ -114,17 +114,17 @@ class Handler extends ExceptionHandler
     /**
      * Parse exception and response with error message
      *
-     * @param \Exception $exception
+     * @param \Throwable $e
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function parseResponse(Exception $exception)
+    protected function parseResponse(Throwable $e)
     {
         // Define the response
         $response = [
             'errors' => [
                 [
-                    'general' => $exception->getMessage() ?? trans(config('ptuchik-core-utilities.translations_prefix').'.something_went_wrong')
+                    'general' => $e->getMessage() ?? trans(config('ptuchik-core-utilities.translations_prefix').'.something_went_wrong')
                 ]
             ]
         ];
@@ -133,12 +133,12 @@ class Handler extends ExceptionHandler
         if (config('app.debug')) {
 
             // Add the exception class name, message and stack trace to response
-            $response['exception'] = get_class($exception);
-            $response['trace'] = $exception->getTrace();
+            $response['exception'] = get_class($e);
+            $response['trace'] = $e->getTrace();
         }
 
-        $response['message'] = $exception->getMessage();
-        $response['code'] = $this->getStatusCode($exception);
+        $response['message'] = $e->getMessage();
+        $response['code'] = $this->getStatusCode($e);
 
         // Return a JSON response with the response array and status code
         return response()->json($response, $response['code']);
@@ -147,17 +147,17 @@ class Handler extends ExceptionHandler
     /**
      * Get status code from exception
      *
-     * @param \Exception $exception
+     * @param \Throwable $e
      *
      * @return int
      */
-    protected function getStatusCode(Exception $exception)
+    protected function getStatusCode(Throwable $e)
     {
         // If this exception is an instance of HttpException
-        if ($this->isHttpException($exception)) {
+        if ($this->isHttpException($e)) {
 
             // Grab the HTTP status code from the Exception
-            return $exception->getStatusCode();
+            return $e->getStatusCode();
         }
 
         // Otherwise return 400
