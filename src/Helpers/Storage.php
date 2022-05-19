@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage as BaseStorage;
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
-use Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter;
 
 /**
  * Class Storage
