@@ -55,7 +55,6 @@ class Storage
 
         // Set visibility
         $this->visibility = $public ? Filesystem::VISIBILITY_PUBLIC : $this->visibility = Filesystem::VISIBILITY_PRIVATE;
-        $this->disk->getDriver()->getConfig()->set('disable_asserts', true);
     }
 
     /**
