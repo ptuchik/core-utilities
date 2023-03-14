@@ -13,7 +13,7 @@
   "license": "MIT",
   "type": "library",
   "require": {
-    "illuminate/support": "^7.0|^8.0|^9.0",
+    "illuminate/support": "^7.0|^8.0|^9.0|^10.0",
     "spatie/laravel-translatable": "^5.0",
     "intervention/image": "^2.0",
     "jenssegers/agent": "^2.6",
