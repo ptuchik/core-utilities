@@ -27,15 +27,15 @@ class DataStorage
         return $this;
     }
 
-    public function unset(string $key, $value)
+    public function unset(string $keys)
     {
-        Arr::forget($this->data, $key, $value);
+        Arr::forget($this->data, $keys);
         return $this;
     }
 
-    public function get(string $key)
+    public function get(string $key, $default = null)
     {
-        return Arr::get($this->data, $key);
+        return Arr::get($this->data, $key, $default);
     }
 
     public function except($keys)
