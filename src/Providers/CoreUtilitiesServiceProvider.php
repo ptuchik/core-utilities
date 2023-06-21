@@ -5,6 +5,8 @@ namespace Ptuchik\CoreUtilities\Providers;
 use Illuminate\Support\ServiceProvider;
 use Ptuchik\CoreUtilities\Helpers\DataStorage;
 
+use function request;
+
 /**
  * Class CoreUtilitiesServiceProvider
  *
@@ -35,7 +37,7 @@ class CoreUtilitiesServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/core-utilities.php', 'ptuchik-core-utilities');
 
         $this->app->singleton(DataStorage::class, function () {
-            return new DataStorage();
+            return new DataStorage(request()->all());
         });
     }
 }
