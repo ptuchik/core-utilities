@@ -46,11 +46,11 @@ class DataStorage
     }
 
     /**
-     * @param string $keys
+     * @param array $keys
      *
      * @return $this
      */
-    public function unset(string $keys)
+    public function unset(array $keys)
     {
         Arr::forget($this->data, $keys);
         return $this;
