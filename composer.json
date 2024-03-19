@@ -14,9 +14,9 @@
   "type": "library",
   "require": {
     "illuminate/support": "^7.0|^8.0",
-    "spatie/laravel-translatable": "^4.0",
-    "superbalist/laravel-google-cloud-storage": "^2.0",
-    "intervention/image": "^2.0"
+    "spatie/laravel-translatable": "*",
+    "superbalist/laravel-google-cloud-storage": "*",
+    "intervention/image": "*"
   },
   "autoload": {
     "psr-4": {
